@@ -30,3 +30,5 @@ RUN chmod +x /usr/local/bin/entry-almobi
 
 EXPOSE 8000
 EXPOSE 9001
+
+ENTRYPOINT ["entry-almobi"]
