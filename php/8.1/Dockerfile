@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-alpine
+FROM php:8.1-fpm-alpine
 
 ENV TZ=UTC
 
@@ -13,6 +13,10 @@ RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd cu
 
 RUN pecl install xdebug-3.0.3;\
     docker-php-ext-enable xdebug
+
+RUN pecl install -o -f redis; \
+    rm -rf /tmp/pear; \
+    docker-php-ext-enable redis;
 
 # Dockerize Command
 ENV DOCKERIZE_VERSION v0.6.1
