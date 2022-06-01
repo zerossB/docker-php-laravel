@@ -14,6 +14,10 @@ RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd cu
 RUN pecl install xdebug-3.0.3;\
     docker-php-ext-enable xdebug
 
+RUN pecl install -o -f redis; \
+    rm -rf /tmp/pear; \
+    docker-php-ext-enable redis;
+
 # Dockerize Command
 ENV DOCKERIZE_VERSION v0.6.1
 RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
