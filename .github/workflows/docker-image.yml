@@ -5,34 +5,67 @@ on:
     branches: [ master ]
 
 jobs:
-
-  build:
-
+  docker-login:
+    name: Login on Docker Hub
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Docker Hub Login
+        env:
+          DOCKER_HUB_LOGIN: ${{secrets.DOCKER_HUB_LOGIN}}
+          DOCKER_HUB_SECRET: ${{secrets.DOCKER_HUB_SECRET}}
+        run: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_SECRET
+
+  build-latest:
+    name: Build and Push Docker Latest image
+    runs-on: ubuntu-latest
+    needs: [ docker-login ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the Docker Image Latest
+        run: docker build . --file php/8.1/Dockerfile --tag anave/php-laravel:latest
+
+      - name: Push Docker Image Latest
+        run: docker push anave/php-laravel:latest
+
+  build-8-1:
+    name: Build and Push Docker image 8.1
+    runs-on: ubuntu-latest
+    needs: [ docker-login ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the Docker Image 8.1
+        run: docker build . --file php/8.1/Dockerfile --tag anave/php-laravel:8.1
+
+      - name: Push Docker Image 8.0
+        run: docker push anave/php-laravel:8.1
+
+  build-8:
+    name: Build and Push Docker image 8.0
+    runs-on: ubuntu-latest
+    needs: [ docker-login ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build the Docker Image 8.0
+        run: docker build . --file php/8.0/Dockerfile --tag anave/php-laravel:8
+
+      - name: Push Docker Image 8.0
+        run: docker push anave/php-laravel:8
+
+  build-7:
+    name: Build and Push Docker image 7.4
+    runs-on: ubuntu-latest
+    needs: [ docker-login ]
 
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Docker Hub Login
-      env:
-        DOCKER_HUB_LOGIN: ${{secrets.DOCKER_HUB_LOGIN}}
-        DOCKER_HUB_SECRET: ${{secrets.DOCKER_HUB_SECRET}}
-      run: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_SECRET
-    
-    - name: Build the Docker Image 7.4
-      run: docker build . --file php/7.4/Dockerfile --tag anave/php-laravel:7.4
-      
-    - name: Push Docker Image 7.4
-      run: docker push anave/php-laravel:7.4
-    
-    - name: Build the Docker Image 8.0
-      run: docker build . --file php/7.4/Dockerfile --tag anave/php-laravel:8
-      
-    - name: Push Docker Image 8.0
-      run: docker push anave/php-laravel:8
-    
-    - name: Build the Docker Image 8.1
-      run: docker build . --file php/7.4/Dockerfile --tag anave/php-laravel:8.1
-    
-    - name: Push Docker Image 8.1
-      run: docker push anave/php-laravel:8.1
+      - uses: actions/checkout@v3
+
+      - name: Build the Docker Image 7.4
+        run: docker build . --file php/7.4/Dockerfile --tag anave/php-laravel:7.4
+
+      - name: Push Docker Image 7.4
+        run: docker push anave/php-laravel:7.4
