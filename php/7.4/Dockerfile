@@ -11,7 +11,7 @@ RUN apk update && apk add --no-cache gcc bash tzdata libpng-dev oniguruma-dev op
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd curl zip intl
 
-RUN pecl install xdebug-3.0.3;\
+RUN pecl install xdebug-3.1.4;\
     docker-php-ext-enable xdebug
 
 RUN pecl install -o -f redis; \
