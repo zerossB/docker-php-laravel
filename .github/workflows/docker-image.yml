@@ -24,6 +24,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Docker Hub Login
+        env:
+          DOCKER_HUB_LOGIN: ${{secrets.DOCKER_HUB_LOGIN}}
+          DOCKER_HUB_SECRET: ${{secrets.DOCKER_HUB_SECRET}}
+        run: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_SECRET
+
       - name: Build the Docker Image Latest
         run: docker build . --file php/8.1/Dockerfile --tag anave/php-laravel:latest
 
@@ -36,6 +42,12 @@ jobs:
     needs: [ docker-login ]
     steps:
       - uses: actions/checkout@v3
+
+      - name: Docker Hub Login
+        env:
+          DOCKER_HUB_LOGIN: ${{secrets.DOCKER_HUB_LOGIN}}
+          DOCKER_HUB_SECRET: ${{secrets.DOCKER_HUB_SECRET}}
+        run: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_SECRET
 
       - name: Build the Docker Image 8.1
         run: docker build . --file php/8.1/Dockerfile --tag anave/php-laravel:8.1
@@ -50,6 +62,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Docker Hub Login
+        env:
+          DOCKER_HUB_LOGIN: ${{secrets.DOCKER_HUB_LOGIN}}
+          DOCKER_HUB_SECRET: ${{secrets.DOCKER_HUB_SECRET}}
+        run: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_SECRET
+
       - name: Build the Docker Image 8.0
         run: docker build . --file php/8.0/Dockerfile --tag anave/php-laravel:8
 
@@ -63,6 +81,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Docker Hub Login
+        env:
+          DOCKER_HUB_LOGIN: ${{secrets.DOCKER_HUB_LOGIN}}
+          DOCKER_HUB_SECRET: ${{secrets.DOCKER_HUB_SECRET}}
+        run: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_SECRET
 
       - name: Build the Docker Image 7.4
         run: docker build . --file php/7.4/Dockerfile --tag anave/php-laravel:7.4
