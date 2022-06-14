@@ -4,7 +4,7 @@ ENV TZ=UTC
 
 # Install system dependencies
 RUN apk update && apk add --no-cache gcc bash tzdata libpng-dev oniguruma-dev openssl \
-    libxml2-dev libzip-dev mysql-client sqlite-dev curl-dev icu-dev g++ make autoconf nginx supervisor; \
+    libxml2-dev libzip-dev mysql-client sqlite-dev curl-dev icu-dev g++ make autoconf nginx supervisor sudo; \
     cp /usr/share/zoneinfo/$TZ /etc/localtime; \
     echo $TZ > /etc/timezone;
 
