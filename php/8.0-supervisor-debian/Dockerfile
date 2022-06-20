@@ -10,11 +10,6 @@ RUN apt-get update && apt-get install -y build-essential software-properties-com
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime; \
     echo $TZ > /etc/timezone;
 
-#RUN apk update && apk add --no-cache gcc bash tzdata libpng-dev oniguruma-dev openssl \
-#    libxml2-dev libzip-dev mysql-client sqlite-dev curl-dev icu-dev g++ make autoconf nginx supervisor sudo; \
-#    cp /usr/share/zoneinfo/$TZ /etc/localtime; \
-#    echo $TZ > /etc/timezone;
-
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd curl zip intl
 
