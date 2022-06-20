@@ -29,9 +29,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . /var/www/html
 
 RUN cp ./scripts/entrypoint.sh /usr/local/bin/entry-almobi; \
-    cp ./scripts/nginx.conf /etc/nginx/http.d/default.conf; \
-    mkdir /etc/supervisor.d; \
-    cp ./scripts/supervisor.ini /etc/supervisor.d; \
+    cp ./scripts/nginx.conf /etc/nginx/sites-available/default; \
+    cp ./scripts/supervisor.ini /etc/supervisor/conf.d/modular.ini; \
     chmod +x /usr/local/bin/entry-almobi;
 
 EXPOSE 8000
