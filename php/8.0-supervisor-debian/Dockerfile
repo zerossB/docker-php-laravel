@@ -3,7 +3,7 @@ FROM php:8.0-fpm
 ENV TZ=UTC
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y build-essential wget tzdata git curl libpng-dev libonig-dev libxml2-dev zip unzip \
+RUN apt-get update && apt-get install -y build-essential software-properties-common ca-certificates wget tzdata git curl libpng-dev libonig-dev libxml2-dev zip unzip \
     libmariadb-dev sqlite3 libsqlite3-dev g++ libicu-dev libpq-dev libzip-dev zip zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libcurl4-openssl-dev
 
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime; \
