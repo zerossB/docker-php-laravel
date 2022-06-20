@@ -90,8 +90,27 @@ jobs:
       - name: Build the Docker Image 8.0-supervisor
         run: docker build . --file php/8.0-supervisor/Dockerfile --tag anave/php-laravel:8-supervisor
 
-      - name: Push Docker Image 8.0
+      - name: Push Docker Image 8.0-supervisor
         run: docker push anave/php-laravel:8-supervisor
+
+  build-8-supervisor-debian:
+    name: Build and Push Docker image 8.0 with Supervisor on Debian Image
+    runs-on: ubuntu-latest
+    needs: [ docker-login ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Docker Hub Login
+        env:
+          DOCKER_HUB_LOGIN: ${{secrets.DOCKER_HUB_LOGIN}}
+          DOCKER_HUB_SECRET: ${{secrets.DOCKER_HUB_SECRET}}
+        run: docker login -u $DOCKER_HUB_LOGIN -p $DOCKER_HUB_SECRET
+
+      - name: Build the Docker Image 8.0-supervisor-debian
+        run: docker build . --file php/8.0-supervisor-debian/Dockerfile --tag anave/php-laravel:8-supervisor-debian
+
+      - name: Push Docker Image 8.0-supervisor-debian
+        run: docker push anave/php-laravel:8-supervisor-debian
 
   build-7:
     name: Build and Push Docker image 7.4
