@@ -30,7 +30,7 @@ COPY . /var/www/html
 
 RUN cp ./scripts/entrypoint.sh /usr/local/bin/entry-almobi; \
     cp ./scripts/nginx.conf /etc/nginx/sites-available/default; \
-    cp ./scripts/supervisor.ini /etc/supervisor/conf.d/modular.ini; \
+    cp ./scripts/supervisor.ini /etc/supervisor/supervisord.conf; \
     chmod +x /usr/local/bin/entry-almobi;
 
 EXPOSE 8000
