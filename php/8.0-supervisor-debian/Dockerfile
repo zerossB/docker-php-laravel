@@ -4,15 +4,11 @@ ENV TZ=UTC
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y build-essential software-properties-common ca-certificates wget tzdata git curl libpng-dev libonig-dev libxml2-dev zip unzip \
-    libmariadb-dev sqlite3 libsqlite3-dev g++ libicu-dev libpq-dev libzip-dev zip zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libcurl4-openssl-dev
+    libmariadb-dev sqlite3 libsqlite3-dev g++ libicu-dev libpq-dev libzip-dev zip zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libcurl4-openssl-dev \
+    gnupg gnupg2 gnupg1
 
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime; \
     echo $TZ > /etc/timezone;
-
-#RUN apk update && apk add --no-cache gcc bash tzdata libpng-dev oniguruma-dev openssl \
-#    libxml2-dev libzip-dev mysql-client sqlite-dev curl-dev icu-dev g++ make autoconf nginx supervisor sudo; \
-#    cp /usr/share/zoneinfo/$TZ /etc/localtime; \
-#    echo $TZ > /etc/timezone;
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd curl zip intl
