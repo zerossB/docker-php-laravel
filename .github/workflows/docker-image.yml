@@ -130,7 +130,7 @@ jobs:
 
       - name: Push Docker Image 8.0-supervisor-debian
         run:
-          docker push anave/php-laravel:8-supervisor-debianb
+          docker push anave/php-laravel:8-supervisor-debian
 
   build-7:
     name: Build and Push Docker image 7.4
