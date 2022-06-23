@@ -1,18 +1,17 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.1-fpm
 
 ENV TZ=UTC
 
 # Install system dependencies
-RUN apk update && apk add --no-cache gcc bash tzdata libpng-dev oniguruma-dev openssl \
-    libxml2-dev libzip-dev mysql-client sqlite-dev curl-dev icu-dev g++ make autoconf sudo; \
-    cp /usr/share/zoneinfo/$TZ /etc/localtime; \
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential software-properties-common ca-certificates wget tzdata git curl libpng-dev libonig-dev libxml2-dev zip unzip \
+    libmariadb-dev sqlite3 libsqlite3-dev g++ libicu-dev libpq-dev libzip-dev zip zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libcurl4-openssl-dev \
+    gnupg gnupg2 gnupg1 supervisor nginx cron
+
+RUN cp /usr/share/zoneinfo/$TZ /etc/localtime; \
     echo $TZ > /etc/timezone;
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd curl zip intl opcache
-
-RUN pecl install xdebug-3.1.4;\
-    docker-php-ext-enable xdebug
 
 RUN pecl install -o -f redis; \
     rm -rf /tmp/pear; \
@@ -29,8 +28,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY . /var/www/html
 
-RUN cp ./scripts/entrypoint.sh /usr/local/bin/entry-almobi
-RUN chmod +x /usr/local/bin/entry-almobi
+RUN cp ./scripts/entrypoint.sh /usr/local/bin/entry-almobi; \
+    cp ./scripts/nginx.conf /etc/nginx/sites-available/default; \
+    cp ./scripts/supervisor.ini /etc/supervisor/supervisord.conf; \
+    cp ./scripts/opcache.ini /usr/local/etc/php/conf.d/opcache.ini; \
+    chmod +x /usr/local/bin/entry-almobi;
 
 EXPOSE 8000
 EXPOSE 9001
