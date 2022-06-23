@@ -9,7 +9,7 @@ RUN apk update && apk add --no-cache gcc bash tzdata libpng-dev oniguruma-dev op
     echo $TZ > /etc/timezone;
 
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd curl zip intl
+RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd curl zip intl opcache
 
 RUN pecl install xdebug-3.1.4;\
     docker-php-ext-enable xdebug
