@@ -31,7 +31,6 @@ COPY . /var/www/html
 RUN cp ./scripts/entrypoint.sh /usr/local/bin/entry-almobi; \
     cp ./scripts/nginx.conf /etc/nginx/sites-available/default; \
     cp ./scripts/supervisor.ini /etc/supervisor/supervisord.conf; \
-    cp ./scripts/opcache.ini /usr/local/etc/php/conf.d/opcache.ini; \
     chmod +x /usr/local/bin/entry-almobi;
 
 EXPOSE 8000
