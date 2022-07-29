@@ -2,9 +2,18 @@ FROM php:8.1-fpm
 
 ENV TZ=UTC
 
+ENV PHP_OPCACHE_ENABLE=1
+ENV PHP_OPCACHE_REVALIDATE_FREQ=0
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0
+ENV PHP_OPCACHE_MAX_ACCELERATED_FILES=10000
+ENV PHP_OPCACHE_MEMORY_CONSUMPTION=192
+ENV PHP_OPCACHE_MAX_WASTED_PERCENTAGE=10
+ENV PHP_OPCACHE_INTERNED_STRINGS_BUFFER=16
+
 # Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential software-properties-common ca-certificates wget tzdata git curl libpng-dev libonig-dev libxml2-dev zip unzip \
-    libmariadb-dev sqlite3 libsqlite3-dev g++ libicu-dev libpq-dev libzip-dev zip zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libcurl4-openssl-dev \
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential software-properties-common ca-certificates \
+    wget tzdata git curl libpng-dev libonig-dev libxml2-dev zip unzip libmariadb-dev sqlite3 libsqlite3-dev g++  \
+    libicu-dev libpq-dev libzip-dev zip zlib1g-dev libfreetype6-dev libjpeg62-turbo-dev libpng-dev libcurl4-openssl-dev \
     gnupg gnupg2 gnupg1 supervisor nginx cron
 
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime; \
@@ -31,6 +40,7 @@ COPY . /var/www/html
 RUN cp ./scripts/entrypoint.sh /usr/local/bin/entry-almobi; \
     cp ./scripts/nginx.conf /etc/nginx/sites-available/default; \
     cp ./scripts/supervisor.ini /etc/supervisor/supervisord.conf; \
+    cp ./scripts/opcache.ini /usr/local/etc/php/conf.d/opcache.ini; \
     chmod +x /usr/local/bin/entry-almobi;
 
 EXPOSE 8000
