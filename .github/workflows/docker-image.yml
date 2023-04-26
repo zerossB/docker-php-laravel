@@ -1,4 +1,4 @@
-name: Upload Docker Image to HUB
+name: Upload Docker Image to Docker HUB
 
 on:
   push:
