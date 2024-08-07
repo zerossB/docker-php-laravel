@@ -1,6 +1,6 @@
 FROM php:8.3-fpm-alpine
 
-ENV TZ=UTC
+ENV TZ UTC
 
 # Install system dependencies
 RUN apk update && apk add --no-cache gcc bash tzdata libpng-dev oniguruma-dev openssl \
@@ -11,10 +11,9 @@ RUN apk update && apk add --no-cache gcc bash tzdata libpng-dev oniguruma-dev op
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd curl zip intl opcache
 
-RUN pecl install xdebug-3.1.4;\
-    docker-php-ext-enable xdebug
-
-RUN pecl install -o -f redis; \
+RUN pecl install xdebug-3.3.2; \
+    docker-php-ext-enable xdebug; \
+    pecl install -o -f redis; \
     rm -rf /tmp/pear; \
     docker-php-ext-enable redis;
 
